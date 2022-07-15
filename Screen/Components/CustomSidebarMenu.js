@@ -1,62 +1,59 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
- 
 // Import React and Component
-import React from 'react';
-import {View, Text, Alert, StyleSheet} from 'react-native';
- 
+import React from "react";
+import { View, Text, Alert, StyleSheet, Image } from "react-native";
+
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from '@react-navigation/drawer';
- 
-import { AsyncStorage } from 'react-native';
- 
+} from "@react-navigation/drawer";
+
+import { AsyncStorage } from "react-native";
+
 const CustomSidebarMenu = (props) => {
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <View style={stylesSidebar.profileHeader}>
         <View style={stylesSidebar.profileHeaderPicCircle}>
-          <Text style={{fontSize: 25, color: '#307ecc'}}>
-            {'About React'.charAt(0)}
-          </Text>
+          {/* <Text style={{ fontSize: 25, color: "#307ecc" }}>
+            {"Fintech".charAt(0)}
+          </Text> */}
+          <Image
+            source={require("../../assets/fintech.png")}
+            style={{ width: 50, height: 50, borderRadius: 50 / 2 }}
+          />
         </View>
-        <Text style={stylesSidebar.profileHeaderText}>
-          AboutReact
-        </Text>
+        <Text style={stylesSidebar.profileHeaderText}>Fintech</Text>
       </View>
       <View style={stylesSidebar.profileHeaderLine} />
- 
+
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
         <DrawerItem
-          label={({color}) => 
-            <Text style={{color: '#d8d8d8'}}>
-              Logout
-            </Text>
-          }
+          label={({ color }) => (
+            <Text style={{ color: "#d8d8d8" }}>Logout</Text>
+          )}
           onPress={() => {
             props.navigation.toggleDrawer();
             Alert.alert(
-              'Logout',
-              'Are you sure? You want to logout?',
+              "Logout",
+              "Are you sure? You want to logout?",
               [
                 {
-                  text: 'Cancel',
+                  text: "Cancel",
                   onPress: () => {
                     return null;
                   },
                 },
                 {
-                  text: 'Confirm',
+                  text: "Confirm",
                   onPress: () => {
                     AsyncStorage.clear();
-                    props.navigation.replace('Auth');
+                    props.navigation.replace("Auth");
                   },
                 },
               ],
-              {cancelable: false},
+              { cancelable: false }
             );
           }}
         />
@@ -64,43 +61,43 @@ const CustomSidebarMenu = (props) => {
     </View>
   );
 };
- 
+
 export default CustomSidebarMenu;
- 
+
 const stylesSidebar = StyleSheet.create({
   sideMenuContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#307ecc',
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#307ecc",
     paddingTop: 40,
-    color: 'white',
+    color: "white",
   },
   profileHeader: {
-    flexDirection: 'row',
-    backgroundColor: '#307ecc',
+    flexDirection: "row",
+    backgroundColor: "#307ecc",
     padding: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
   profileHeaderPicCircle: {
     width: 60,
     height: 60,
     borderRadius: 60 / 2,
-    color: 'white',
-    backgroundColor: '#ffffff',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: "white",
+    backgroundColor: "#ffffff",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   profileHeaderText: {
-    color: 'white',
-    alignSelf: 'center',
+    color: "white",
+    alignSelf: "center",
     paddingHorizontal: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   profileHeaderLine: {
     height: 1,
     marginHorizontal: 20,
-    backgroundColor: '#e2e2e2',
+    backgroundColor: "#e2e2e2",
     marginTop: 15,
   },
 });
