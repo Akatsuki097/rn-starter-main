@@ -10,6 +10,7 @@ import HomeScreen from "./DrawerScreens/HomeScreen";
 import SettingsScreen from "./DrawerScreens/SettingsScreen";
 import CustomSidebarMenu from "./Components/CustomSidebarMenu";
 import NavigationDrawerHeader from "./Components/NavigationDrawerHeader";
+import GoalScreen from "./DrawerScreens/GoalScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,6 +23,30 @@ const HomeScreenStack = ({ navigation }) => {
         component={HomeScreen}
         options={{
           title: "Home", //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: "#307ecc", //Set Header color
+          },
+          headerTintColor: "#fff", //Set Header text color
+          headerTitleStyle: {
+            fontWeight: "bold", //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const GoalScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator initialRouteName="GoalScreen">
+      <Stack.Screen
+        name="GoalScreen"
+        component={GoalScreen}
+        options={{
+          title: "Goal", //Set Header Title
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -89,6 +114,16 @@ const DrawerNavigatorRoutes = (props) => {
         }}
         component={HomeScreenStack}
       />
+      <Drawer.Screen
+        name="GoalScreenStack"
+        options={{
+          drawerLabel: "Goal Screen",
+          drawerActiveTintColor: "#fff",
+          drawerInactiveTintColor: "#fff",
+        }}
+        component={GoalScreenStack}
+      />
+
       <Drawer.Screen
         name="SettingScreenStack"
         options={{
