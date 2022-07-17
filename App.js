@@ -1,76 +1,41 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
-import 'react-native-gesture-handler';
- 
-// Import React and Component
-import React from 'react';
- 
-// Import Navigators from React Navigation
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
- 
-// Import Screens
-import SplashScreen from './Screen/SplashScreen';
-import LoginScreen from './Screen/LoginScreen';
-import RegisterScreen from './Screen/RegisterScreen';
-import DrawerNavigationRoutes from './Screen/DrawerNavigationRoutes';
- 
-const Stack = createStackNavigator();
- 
-const Auth = () => {
-  // Stack Navigator for Login and Sign up Screen
-  return (
-    <Stack.Navigator initialRouteName="LoginScreen">
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{
-          title: 'Register', //Set Header Title
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
- 
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
-        {/* SplashScreen which will come once for 5 Seconds */}
-        <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
-          // Hiding header for Splash Screen
-          options={{headerShown: false}}
-        />
-        {/* Auth Navigator: Include Login and Signup */}
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{headerShown: false}}
-        />
-        {/* Navigation Drawer as a landing page */}
-        <Stack.Screen
-          name="DrawerNavigationRoutes"
-          component={DrawerNavigationRoutes}
-          // Hiding header for Navigation Drawer
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
- 
-export default App;
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
