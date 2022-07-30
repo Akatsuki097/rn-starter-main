@@ -2,8 +2,9 @@
 import React from "react";
 
 // Import Navigators from React Navigation
-import { createStackNavigator } from "@react-navigation/stack";
+
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Import Screens
 import HomeScreen from "./DrawerScreens/HomeScreen";
@@ -11,8 +12,9 @@ import SettingsScreen from "./DrawerScreens/SettingsScreen";
 import CustomSidebarMenu from "./Components/CustomSidebarMenu";
 import NavigationDrawerHeader from "./Components/NavigationDrawerHeader";
 import GoalScreen from "./DrawerScreens/GoalScreen";
+import ExpenseScreen from "./DrawerScreens/ExpenseScreen";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const HomeScreenStack = ({ navigation }) => {
@@ -47,6 +49,30 @@ const GoalScreenStack = ({ navigation }) => {
         component={GoalScreen}
         options={{
           title: "Goal", //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: "#307ecc", //Set Header color
+          },
+          headerTintColor: "#fff", //Set Header text color
+          headerTitleStyle: {
+            fontWeight: "bold", //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ExpenseScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator initialRouteName="ExpenseScreen">
+      <Stack.Screen
+        name="ExpenseScreen"
+        component={ExpenseScreen}
+        options={{
+          title: "Expense", //Set Header Title
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -114,6 +140,17 @@ const DrawerNavigatorRoutes = (props) => {
         }}
         component={HomeScreenStack}
       />
+
+      <Drawer.Screen
+        name="ExpenseScreenStack"
+        options={{
+          drawerLabel: "Expense Screen",
+          drawerActiveTintColor: "#fff",
+          drawerInactiveTintColor: "#fff",
+        }}
+        component={ExpenseScreenStack}
+      />
+
       <Drawer.Screen
         name="GoalScreenStack"
         options={{
