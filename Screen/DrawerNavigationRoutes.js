@@ -73,6 +73,7 @@ const ExpenseScreenStack = ({ navigation }) => {
         component={ExpenseScreen}
         options={{
           title: "Expense", //Set Header Title
+          headerShown: false,
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),

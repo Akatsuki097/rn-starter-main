@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   flatText: {
-    color: "red",
+    color: "brown",
   },
 
   pressed: {

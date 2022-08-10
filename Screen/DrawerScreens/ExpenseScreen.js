@@ -53,7 +53,7 @@ function ExpenseOverview() {
         component={RecentExpenses}
         options={{
           title: "Recent Expenses",
-          tabBarLabel: "Recent",
+          tabBarLabel: "Recent Expenses",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="hourglass" color={color} size={size} />
           ),
@@ -80,11 +80,13 @@ export default function App() {
               component={ExpenseOverview}
               options={{ headerShown: false }}
             />
+
             <Stack.Screen
               name="ManageExpense"
               component={ManageExpense}
               options={{
                 presentation: "modal",
+                //headerShown: false,
               }}
             />
           </Stack.Navigator>
