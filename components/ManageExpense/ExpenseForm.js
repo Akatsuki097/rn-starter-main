@@ -8,18 +8,16 @@ import { GlobalStyles } from "../../constants/styles";
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [inputs, setInputs] = useState({
     amount: {
-      value: defaultValues ? defaultValues.amount.toString() : " ",
+      value: defaultValues ? defaultValues.amount.toString() : "",
       isValid: true,
     },
     //date: defaultValues ? getFormattedDate(defaultValues.date) : "",
     date: {
-      value: defaultValues
-        ? defaultValues.date.toISOString().slice(0, 10)
-        : " ",
+      value: defaultValues ? defaultValues.date.toISOString().slice(0, 10) : "",
       isValid: true,
     },
     description: {
-      value: defaultValues ? defaultValues.description : " ",
+      value: defaultValues ? defaultValues.description : "",
       isValid: true,
     },
   });

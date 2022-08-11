@@ -38,17 +38,6 @@ function ExpenseOverview() {
       })}
     >
       <Stack.Screen
-        name="AllExpenses"
-        component={AllExpenses}
-        options={{
-          title: "All Expenses",
-          tabBarLabel: "All Expenses",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" color={color} size={size} />
-          ),
-        }}
-      />
-      <Stack.Screen
         name="RecentExpenses"
         component={RecentExpenses}
         options={{
@@ -56,6 +45,18 @@ function ExpenseOverview() {
           tabBarLabel: "Recent Expenses",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="hourglass" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="AllExpenses"
+        component={AllExpenses}
+        options={{
+          title: "All Expenses",
+          tabBarLabel: "All Expenses",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" color={color} size={size} />
           ),
         }}
       />
