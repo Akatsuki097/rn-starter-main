@@ -5,20 +5,20 @@ import { GlobalStyles } from "../../constants/styles";
 import { getFomattedDate } from "../../util/date";
 import { useNavigation } from "@react-navigation/native";
 
-function ExpenseItem({ id, description, amount, date }) {
+function IncomeItem({ id, description, amount, date }) {
   const navigation = useNavigation();
-  function expensepressHandler() {
-    navigation.navigate("ManageExpense", {
-      expenseId: id,
+  function incomepressHandler() {
+    navigation.navigate("ManageIncome", {
+      incomeId: id,
     });
   }
 
   return (
     <Pressable
-      onPress={expensepressHandler}
+      onPress={incomepressHandler}
       style={({ pressed }) => pressed && styles.pressed}
     >
-      <View style={styles.expenseItem}>
+      <View style={styles.incomeItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
             {description}
@@ -32,13 +32,13 @@ function ExpenseItem({ id, description, amount, date }) {
     </Pressable>
   );
 }
-export default ExpenseItem;
+export default IncomeItem;
 
 const styles = StyleSheet.create({
   pressed: {
     opacity: 0.75,
   },
-  expenseItem: {
+  incomeItem: {
     padding: 12,
     marginVertical: 8,
     backgroundColor: GlobalStyles.colors.primary50,

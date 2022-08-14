@@ -13,6 +13,7 @@ import CustomSidebarMenu from "./Components/CustomSidebarMenu";
 import NavigationDrawerHeader from "./Components/NavigationDrawerHeader";
 import GoalScreen from "./DrawerScreens/GoalScreen";
 import ExpenseScreen from "./DrawerScreens/ExpenseScreen";
+import IncomeScreen from "./DrawerScreens/IncomeScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,6 +50,31 @@ const GoalScreenStack = ({ navigation }) => {
         component={GoalScreen}
         options={{
           title: "Goal", //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: "#307ecc", //Set Header color
+          },
+          headerTintColor: "#fff", //Set Header text color
+          headerTitleStyle: {
+            fontWeight: "bold", //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const IncomeScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator initialRouteName="IncomeScreen">
+      <Stack.Screen
+        name="IncomeScreen"
+        component={IncomeScreen}
+        options={{
+          title: "Income", //Set Header Title
+          headerShown: false,
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -140,6 +166,15 @@ const DrawerNavigatorRoutes = (props) => {
           drawerInactiveTintColor: "#fff",
         }}
         component={HomeScreenStack}
+      />
+      <Drawer.Screen
+        name="IncomeScreenStack"
+        options={{
+          drawerLabel: "Income Screen",
+          drawerActiveTintColor: "#fff",
+          drawerInactiveTintColor: "#fff",
+        }}
+        component={IncomeScreenStack}
       />
 
       <Drawer.Screen
