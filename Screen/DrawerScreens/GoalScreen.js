@@ -1,94 +1,98 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-  FlatList,
-} from "react-native";
-
 import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import GoalItem from "../Components/GoalItem";
-import InputGoalItem from "../Components/InputGoalItem";
-export default function App() {
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [goalList, setgoalList] = useState([]);
+import { Ionicons } from "@expo/vector-icons";
 
-  function startAddGoalHandler() {
-    setModalIsVisible(true);
-  }
+const Stack = createNativeStackNavigator();
+const BottomTabs = createBottomTabNavigator();
 
-  function ButtonHandler(goal) {
-    setgoalList([...goalList, { text: goal, key: Math.random().toString() }]);
-    endAddGoalHandler();
-    //console.log(goal);
-  }
+import AllGoals from "../AllGoals";
+import PendingGoals from "../PendingGoals";
+import ManageGoal from "../ManageGoal";
+import { GlobalStyles } from "../../constants/styles";
+import IconButton from "../../components/UI/IconButton";
+import GoalsContextProvider from "../../store/goals-context";
 
-  function DeleteGoalHandler(key) {
-    setgoalList(goalList.filter((item) => item.key !== key));
-    //console.log(key);
-  }
-
-  function endAddGoalHandler() {
-    setModalIsVisible(false);
-  }
-
+function GoalOverview() {
   return (
-    <>
-      <StatusBar />
-      <View style={styles.container}>
-        <View style={styles.list}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => item.key}
-            data={goalList}
-            renderItem={(goal) => {
-              //console.log(goal.item.text);
-              return (
-                <GoalItem
-                  text={goal.item.text}
-                  id={goal.item.key}
-                  onDeleteItem={DeleteGoalHandler}
-                />
-              );
+    <BottomTabs.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: "#5f9ea0" },
+        headerTintColor: "white",
+        headerTitleStyle: { fontWeight: "bold" },
+        tabBarStyle: { backgroundColor: "#5f9ea0" },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: "white",
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => {
+              navigation.navigate("ManageGoal");
             }}
           />
-        </View>
+        ),
+      })}
+    >
+      <Stack.Screen
+        name="PendingGoals"
+        component={PendingGoals}
+        options={{
+          title: "Pending Goals",
+          tabBarLabel: "Pending Goals",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="hourglass" color={color} size={size} />
+          ),
+        }}
+      />
 
-        <View style={styles.button}>
-          <Button
-            title="Add Goal"
-            color="green"
-            onPress={startAddGoalHandler}
-          />
-        </View>
-        <InputGoalItem
-          visible={modalIsVisible}
-          onAddGoal={ButtonHandler}
-          onCancel={endAddGoalHandler}
-        />
-      </View>
-    </>
+      <Stack.Screen
+        name="AllGoals"
+        component={AllGoals}
+        options={{
+          title: "All Goals",
+          tabBarLabel: "All Goals",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" color={color} size={size} />
+          ),
+        }}
+      />
+    </BottomTabs.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 50,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
+export default function App() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <GoalsContextProvider>
+        <NavigationContainer independent={true}>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#5f9ea0" },
+              headerTintColor: "white",
+            }}
+          >
+            <Stack.Screen
+              name="GoalOverview"
+              component={GoalOverview}
+              options={{ headerShown: false }}
+            />
 
-  list: {
-    flex: 5,
-  },
-  button: {
-    flex: 0.8,
-    // justifyContent: "center",
-  },
-});
+            <Stack.Screen
+              name="ManageGoal"
+              component={ManageGoal}
+              options={{
+                presentation: "modal",
+                //headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GoalsContextProvider>
+    </>
+  );
+}

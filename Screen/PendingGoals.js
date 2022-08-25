@@ -1,30 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import { Text } from "react-native";
-import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
-import { ExpenseContext } from "../store/expenses-context";
+import GoalsOutput from "../components/GoalsOutput/GoalsOutput";
+import { GoalContext } from "../store/goals-context";
 import { getDateMinusDays } from "../util/date";
-import {} from "../util/http";
+import { fetchGoals } from "../util/http_goal";
 import Loader from "./Components/Loader";
 import ErrorOverlay from "./Components/ErrorOverlay";
 
-function RecentExpenses() {
-  const expensesCtx = useContext(ExpenseContext);
+function PendingGoals() {
+  const goalsCtx = useContext(GoalContext);
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   useEffect(() => {
-    async function getExpenses() {
+    async function getGoals() {
       setIsFetching(true);
       try {
-        const expenses = await fetchExpenses();
-        expensesCtx.setExpenses(expenses);
+        const goals = await fetchGoals();
+        goalsCtx.setGoals(goals);
       } catch (error) {
-        setError("Error fetching expenses");
+        setError("Error fetching goals");
       }
 
       setIsFetching(false);
-      //console.log(expenses);
+      //console.log(goals);
     }
-    getExpenses();
+    getGoals();
   }, []);
 
   if (error && !isFetching) {
@@ -35,23 +35,23 @@ function RecentExpenses() {
     return <Loader loading={isFetching} />;
   }
 
-  const RecentExpenses = expensesCtx.expenses.filter((expense) => {
+  const PendingGoals = goalsCtx.goals.filter((goal) => {
     const today = new Date();
     //console.log(today);
-    //console.log(expense.date);
+    //console.log(goal.date);
     const date7daysAgo = getDateMinusDays(today, 7);
     //console.log(" " + date7daysAgo);
 
-    return expense.date >= date7daysAgo;
+    return goal.date >= date7daysAgo;
   });
 
   return (
-    <ExpensesOutput
-      expenses={RecentExpenses}
-      expensesPeriod="Last 7 days"
-      fallbackText="No expenses registered for the last 7 days"
+    <GoalsOutput
+      goals={PendingGoals}
+      goalsPeriod="Last 7 days"
+      fallbackText="No goals registered for the last 7 days"
     />
   );
 }
 
-export default RecentExpenses;
+export default PendingGoals;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet, Alert, Image } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
 import { getFormattedDate } from "../../util/date.js";
@@ -9,7 +9,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { getFormatedDate } from "react-native-modern-datepicker";
 import IconButton from "../UI/IconButton";
 
-function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
+function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
@@ -19,6 +19,8 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [confirmDate, setConfirmDate] = useState(false);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const today = new Date();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -64,14 +66,14 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   }
 
   function submitHandler() {
-    const incomeData = {
+    const expenseData = {
       amount: +inputs.amount.value,
       date: new Date(inputs.date.value),
       description: inputs.description.value,
     };
-    const amountIsValid = !isNaN(incomeData.amount) && incomeData.amount > 0;
-    const dateIsValid = incomeData.date.toString() !== "Invalid Date";
-    const descriptionIsValid = incomeData.description.trim().length > 0;
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
+    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
+    const descriptionIsValid = expenseData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
@@ -89,7 +91,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       return;
     }
 
-    onSubmit(incomeData);
+    onSubmit(expenseData);
   }
 
   const formIsInvalid =
@@ -99,7 +101,8 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
 
   return (
     <View style={styles.formstyle}>
-      <Text style={styles.title}> Your Income </Text>
+      <Text style={styles.title}> Your Course Goal </Text>
+      <Image style={styles.image} source={require("../../assets/goal.png")} />
       <View style={styles.inputRow}>
         <Input
           style={styles.rowInput}
@@ -130,7 +133,8 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       </View>
       {confirmDate && (
         <Text style={[styles.tempdate, styles.date]}>
-          {tempdate.toISOString().slice(0, 10)}
+          {/* {(tempdate-today).toISOString().slice(0, 10)} */}
+          {tempdate - new Date()}
         </Text>
       )}
       <Input
@@ -164,7 +168,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   );
 }
 
-export default IncomeForm;
+export default ExpenseForm;
 
 const styles = StyleSheet.create({
   formstyle: {

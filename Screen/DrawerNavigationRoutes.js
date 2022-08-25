@@ -50,6 +50,7 @@ const GoalScreenStack = ({ navigation }) => {
         component={GoalScreen}
         options={{
           title: "Goal", //Set Header Title
+          headerShown: false,
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
