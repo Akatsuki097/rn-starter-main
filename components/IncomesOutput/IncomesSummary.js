@@ -9,7 +9,7 @@ function IncomesSummary({ incomes, periodName }) {
   return (
     <View style={styles.container}>
       <Text style={styles.period}> {periodName} </Text>
-      <Text style={styles.sum}>${incomesSum.toFixed(2)} </Text>
+      <Text style={styles.sum}>{incomesSum.toFixed(2)} </Text>
     </View>
   );
 }

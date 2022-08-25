@@ -50,8 +50,9 @@ function ManageExpense({ route, navigation }) {
 
     try {
       if (isEditing) {
-        expensesCtx.updateExpense(editedExpenseId, expenseData);
         await updateExpense(editedExpenseId, expenseData);
+        expensesCtx.updateExpense(editedExpenseId, expenseData);
+        //console.log("submit done1");
       } else {
         const id = await storeExpense(expenseData);
         expensesCtx.addExpense({ ...expenseData, id: id });
@@ -63,13 +64,16 @@ function ManageExpense({ route, navigation }) {
     }
   }
 
+  if (isSubmitting) {
+    return <Loader loading={isSubmitting} />;
+    console.log("submit done");
+  }
+
   if (error && !isSubmitting) {
     return <ErrorOverlay message={error} />;
   }
 
-  if (isSubmitting) {
-    return <Loader loading={isSubmitting} />;
-  }
+  // console.log("submit done" + isSubmitting);
 
   return (
     <>

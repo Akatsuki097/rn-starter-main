@@ -26,7 +26,7 @@ function IncomesReducer(state, action) {
       const updateableIncome = state[updateableIncomeIndex];
       const updatedItem = {
         ...updateableIncome,
-        ...action.payload.IncomeData,
+        ...action.payload.data,
       };
       const updatedIncomes = [...state];
       updatedIncomes[updateableIncomeIndex] = updatedItem;

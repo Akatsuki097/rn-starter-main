@@ -4,8 +4,40 @@ import Input from "./Input";
 import Button from "../UI/Button";
 import { getFormattedDate } from "../../util/date.js";
 import { GlobalStyles } from "../../constants/styles";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+import { getFormatedDate } from "react-native-modern-datepicker";
+import IconButton from "../UI/IconButton";
 
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const [tempdate, setTempdate] = useState(new Date());
+
+  const [confirmDate, setConfirmDate] = useState(false);
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    tempdate.setDate(date.getDate() + 1);
+    date.setDate(date.getDate() + 1);
+
+    // console.log("A date has been picked: ", getFormatedDate(date));
+    inputChangeHandler("date", getFormatedDate(date));
+    setDatePickerVisibility(false);
+    setConfirmDate(true);
+  };
+
   const [inputs, setInputs] = useState({
     amount: {
       value: defaultValues ? defaultValues.amount.toString() : "",
@@ -44,6 +76,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
       setInputs((currInputs) => {
+        console.log(currInputs.date.value);
         return {
           amount: { value: currInputs.amount.value, isValid: amountIsValid },
           date: { value: currInputs.date.value, isValid: dateIsValid },
@@ -78,19 +111,28 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
             value: inputs.amount.value,
           }}
         />
-        <Input
-          style={styles.rowInput}
-          label="Date"
-          inValid={!inputs.date.isValid}
-          TextInputConfig={{
-            placeholder: "YYYY-MM-DD",
-            maxLength: 10,
-            onChangeText: inputChangeHandler.bind(this, "date"),
-            value: inputs.date.value,
-          }}
+        <View style={styles.calender}>
+          <Text style={styles.date}>Date </Text>
+          <IconButton
+            icon="calendar"
+            onPress={showDatePicker}
+            size={30}
+            color={"grey"}
+          />
+        </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
         />
+        {/* console.log(confirmDate); */}
       </View>
-
+      {confirmDate && (
+        <Text style={[styles.tempdate, styles.date]}>
+          {tempdate.toISOString().slice(0, 10)}
+        </Text>
+      )}
       <Input
         label="Description"
         inValid={!inputs.description.isValid}
@@ -140,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   rowInput: {
-    flex: 1,
+    flex: 0.9,
   },
   buttons: {
     flexDirection: "row",
@@ -155,5 +197,21 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     margin: 8,
+  },
+  calender: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 25,
+  },
+  date: {
+    fontSize: 14,
+    color: GlobalStyles.colors.primary500,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 15,
+  },
+  tempdate: {
+    alignItems: "flex-end",
+    paddingLeft: 280,
   },
 });
