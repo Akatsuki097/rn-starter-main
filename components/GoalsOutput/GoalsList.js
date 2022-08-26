@@ -1,8 +1,9 @@
 import { FlatList, Text } from "react-native";
+import IncomesContextProvider from "../../store/incomes-context";
 import GoalItem from "./GoalItem";
 
-function renderGoal(itemData) {
-  return <GoalItem {...itemData.item} />;
+function renderGoal(itemData, progress) {
+  return <GoalItem {...itemData.item} progress={0.5} />;
 }
 
 function GoalsList({ goals }) {

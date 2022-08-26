@@ -68,31 +68,31 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <IncomesContextProvider>
-        <NavigationContainer independent={true}>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "#5f9ea0" },
-              headerTintColor: "white",
-            }}
-          >
-            <Stack.Screen
-              name="IncomeOverview"
-              component={IncomeOverview}
-              options={{ headerShown: false }}
-            />
+      {/* <IncomesContextProvider> */}
+      <NavigationContainer independent={true}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: "#5f9ea0" },
+            headerTintColor: "white",
+          }}
+        >
+          <Stack.Screen
+            name="IncomeOverview"
+            component={IncomeOverview}
+            options={{ headerShown: false }}
+          />
 
-            <Stack.Screen
-              name="ManageIncome"
-              component={ManageIncome}
-              options={{
-                presentation: "modal",
-                //headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </IncomesContextProvider>
+          <Stack.Screen
+            name="ManageIncome"
+            component={ManageIncome}
+            options={{
+              presentation: "modal",
+              //headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* </IncomesContextProvider> */}
     </>
   );
 }

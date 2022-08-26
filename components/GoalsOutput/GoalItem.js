@@ -6,9 +6,11 @@ import { GlobalStyles } from "../../constants/styles";
 import { getFomattedDate } from "../../util/date";
 import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "react-native-progress/Bar";
-import { IncomeContext } from "../../store/incomes-context";
+import IncomesContextProvider, {
+  IncomeContext,
+} from "../../store/incomes-context";
 
-function GoalItem({ id, description, amount, date }) {
+function GoalItem({ id, description, amount, date, progress }) {
   const navigation = useNavigation();
   function goalpressHandler() {
     navigation.navigate("ManageGoal", {
@@ -18,24 +20,12 @@ function GoalItem({ id, description, amount, date }) {
 
   const incomesCtx = useContext(IncomeContext);
 
-  const xx = incomesCtx.incomes
-    .filter((income) => {
-      const today = new Date();
-      //console.log(today);
-      //console.log(income.date);
-      const date7daysAgo = getDateMinusDays(today, 7);
-      //console.log(" " + date7daysAgo);
-
-      return income.date >= date7daysAgo;
-    })
-    .reduce((acc, curr) => {
-      return acc + curr.amount;
-    }, 0);
-
-  console.log(xx);
-  // const incomesSum = xx.reduce((sum, income) => {
-  //   return sum + income.amount;
-  // }, 0);
+  // console.log(incomesCtx.incomes.entries.length);
+  const incomesSum = incomesCtx.incomes.reduce((sum, income) => {
+    return sum + income.amount;
+  }, 0);
+  console.log(amount / incomesSum);
+  console.log(incomesSum);
 
   return (
     <Pressable
@@ -50,7 +40,9 @@ function GoalItem({ id, description, amount, date }) {
           <Text style={styles.textBase}>
             {Math.floor((date - new Date()) / (1000 * 60 * 60 * 24))} days left
           </Text>
-          <ProgressBar progress={0.3} width={200} />
+          <ProgressBar progress={amount / incomesSum} width={200}>
+            {<Text>Progress {(amount / incomesSum).toFixed(5) * 100}% </Text>}
+          </ProgressBar>
         </View>
         <View style={styles.amountcontainer}>
           <Text style={styles.amount}>{amount.toFixed(2)}</Text>

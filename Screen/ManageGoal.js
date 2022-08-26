@@ -60,6 +60,7 @@ function ManageGoal({ route, navigation }) {
       setError("Error submitting goal - try again");
       setIsSubmitting(false);
     }
+    goalsCtx.progress = 0.5;
   }
 
   if (isSubmitting) {

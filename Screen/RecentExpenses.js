@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { ExpenseContext } from "../store/expenses-context";
 import { getDateMinusDays } from "../util/date";
-import {} from "../util/http";
+import { fetchExpenses } from "../util/http";
 import Loader from "./Components/Loader";
 import ErrorOverlay from "./Components/ErrorOverlay";
 

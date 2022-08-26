@@ -14,6 +14,7 @@ import NavigationDrawerHeader from "./Components/NavigationDrawerHeader";
 import GoalScreen from "./DrawerScreens/GoalScreen";
 import ExpenseScreen from "./DrawerScreens/ExpenseScreen";
 import IncomeScreen from "./DrawerScreens/IncomeScreen";
+import IncomesContextProvider from "../store/incomes-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,6 +45,7 @@ const HomeScreenStack = ({ navigation }) => {
 
 const GoalScreenStack = ({ navigation }) => {
   return (
+    // <IncomesContextProvider>
     <Stack.Navigator initialRouteName="GoalScreen">
       <Stack.Screen
         name="GoalScreen"
@@ -64,6 +66,7 @@ const GoalScreenStack = ({ navigation }) => {
         }}
       />
     </Stack.Navigator>
+    // </IncomesContextProvider>
   );
 };
 

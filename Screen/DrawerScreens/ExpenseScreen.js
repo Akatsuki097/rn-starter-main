@@ -68,31 +68,31 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <ExpensesContextProvider>
-        <NavigationContainer independent={true}>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "#5f9ea0" },
-              headerTintColor: "white",
-            }}
-          >
-            <Stack.Screen
-              name="ExpenseOverview"
-              component={ExpenseOverview}
-              options={{ headerShown: false }}
-            />
+      {/* <ExpensesContextProvider> */}
+      <NavigationContainer independent={true}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: "#5f9ea0" },
+            headerTintColor: "white",
+          }}
+        >
+          <Stack.Screen
+            name="ExpenseOverview"
+            component={ExpenseOverview}
+            options={{ headerShown: false }}
+          />
 
-            <Stack.Screen
-              name="ManageExpense"
-              component={ManageExpense}
-              options={{
-                presentation: "modal",
-                //headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ExpensesContextProvider>
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpense}
+            options={{
+              presentation: "modal",
+              //headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* </ExpensesContextProvider> */}
     </>
   );
 }

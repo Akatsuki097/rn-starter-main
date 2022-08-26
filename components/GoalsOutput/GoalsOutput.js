@@ -3,11 +3,11 @@ import GoalsList from "./GoalsList";
 import GoalsSummary from "./GoalsSummary";
 import { GlobalStyles } from "../../constants/styles";
 
-function GoalsOutput({ goals, goalsPeriod, fallbackText }) {
+function GoalsOutput({ goals, goalsPeriod, fallbackText, progress }) {
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
 
   if (goals.length > 0) {
-    content = <GoalsList goals={goals} />;
+    content = <GoalsList goals={goals} progress={progress} />;
   }
 
   return (

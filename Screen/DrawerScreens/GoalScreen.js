@@ -8,12 +8,13 @@ import { Ionicons } from "@expo/vector-icons";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-import AllGoals from "../AllGoals";
+import CompletedGoals from "../CompletedGoals";
 import PendingGoals from "../PendingGoals";
 import ManageGoal from "../ManageGoal";
 import { GlobalStyles } from "../../constants/styles";
 import IconButton from "../../components/UI/IconButton";
 import GoalsContextProvider from "../../store/goals-context";
+import IncomesContextProvider from "../../store/incomes-context";
 
 function GoalOverview() {
   return (
@@ -50,11 +51,11 @@ function GoalOverview() {
       />
 
       <Stack.Screen
-        name="AllGoals"
-        component={AllGoals}
+        name="CompletedGoals"
+        component={CompletedGoals}
         options={{
-          title: "All Goals",
-          tabBarLabel: "All Goals",
+          title: "Completed Goals",
+          tabBarLabel: "Completed Goals",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" color={color} size={size} />
           ),
@@ -68,31 +69,34 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <GoalsContextProvider>
-        <NavigationContainer independent={true}>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "#5f9ea0" },
-              headerTintColor: "white",
-            }}
-          >
-            <Stack.Screen
-              name="GoalOverview"
-              component={GoalOverview}
-              options={{ headerShown: false }}
-            />
 
-            <Stack.Screen
-              name="ManageGoal"
-              component={ManageGoal}
-              options={{
-                presentation: "modal",
-                //headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </GoalsContextProvider>
+      {/* <GoalsContextProvider> */}
+      {/* <IncomesContextProvider> */}
+      <NavigationContainer independent={true}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: "#5f9ea0" },
+            headerTintColor: "white",
+          }}
+        >
+          <Stack.Screen
+            name="GoalOverview"
+            component={GoalOverview}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="ManageGoal"
+            component={ManageGoal}
+            options={{
+              presentation: "modal",
+              //headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* </IncomesContextProvider> */}
+      {/* </GoalsContextProvider> */}
     </>
   );
 }
