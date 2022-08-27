@@ -9,32 +9,32 @@ import ErrorOverlay from "./Components/ErrorOverlay";
 
 function PendingGoals() {
   const goalsCtx = useContext(GoalContext);
-  const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-  useEffect(() => {
-    async function getGoals() {
-      setIsFetching(true);
-      try {
-        const goals = await fetchGoals();
-        goalsCtx.setGoals(goals);
-        // console.log(goals);
-      } catch (error) {
-        setError("Error fetching goals");
-      }
+  // const [error, setError] = useState(null);
+  // const [isFetching, setIsFetching] = useState(true);
+  // useEffect(() => {
+  //   async function getGoals() {
+  //     setIsFetching(true);
+  //     try {
+  //       const goals = await fetchGoals();
+  //       goalsCtx.setGoals(goals);
+  //       // console.log(goals);
+  //     } catch (error) {
+  //       setError("Error fetching goals");
+  //     }
 
-      setIsFetching(false);
-      //console.log(goals);
-    }
-    getGoals();
-  }, []);
+  //     setIsFetching(false);
+  //     //console.log(goals);
+  //   }
+  //   getGoals();
+  // }, []);
 
-  if (error && !isFetching) {
-    return <ErrorOverlay message={error} />;
-  }
+  // if (error && !isFetching) {
+  //   return <ErrorOverlay message={error} />;
+  // }
 
-  if (isFetching) {
-    return <Loader loading={isFetching} />;
-  }
+  // if (isFetching) {
+  //   return <Loader loading={isFetching} />;
+  // }
 
   return (
     <GoalsOutput

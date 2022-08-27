@@ -9,31 +9,6 @@ import ErrorOverlay from "./Components/ErrorOverlay";
 
 function RecentIncomes() {
   const incomesCtx = useContext(IncomeContext);
-  const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-  useEffect(() => {
-    async function getIncomes() {
-      setIsFetching(true);
-      try {
-        const incomes = await fetchIncomes();
-        incomesCtx.setIncomes(incomes);
-      } catch (error) {
-        setError("Error fetching incomes");
-      }
-
-      setIsFetching(false);
-      //console.log(incomes);
-    }
-    getIncomes();
-  }, []);
-
-  if (error && !isFetching) {
-    return <ErrorOverlay message={error} />;
-  }
-
-  if (isFetching) {
-    return <Loader loading={isFetching} />;
-  }
 
   const RecentIncomes = incomesCtx.incomes.filter((income) => {
     const today = new Date();

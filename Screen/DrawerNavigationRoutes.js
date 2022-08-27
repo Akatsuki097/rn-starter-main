@@ -26,12 +26,12 @@ const HomeScreenStack = ({ navigation }) => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: "Home", //Set Header Title
+          title: "Dashboard", //Set Header Title
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
           headerStyle: {
-            backgroundColor: "#307ecc", //Set Header color
+            backgroundColor: "#5f9ea0", //Set Header color
           },
           headerTintColor: "#fff", //Set Header text color
           headerTitleStyle: {
@@ -165,7 +165,7 @@ const DrawerNavigatorRoutes = (props) => {
       <Drawer.Screen
         name="HomeScreenStack"
         options={{
-          drawerLabel: "Home Screen",
+          drawerLabel: "Dashboard",
           drawerActiveTintColor: "#fff",
           drawerInactiveTintColor: "#fff",
         }}
@@ -174,7 +174,7 @@ const DrawerNavigatorRoutes = (props) => {
       <Drawer.Screen
         name="IncomeScreenStack"
         options={{
-          drawerLabel: "Income Screen",
+          drawerLabel: "Income ",
           drawerActiveTintColor: "#fff",
           drawerInactiveTintColor: "#fff",
         }}
@@ -184,7 +184,7 @@ const DrawerNavigatorRoutes = (props) => {
       <Drawer.Screen
         name="ExpenseScreenStack"
         options={{
-          drawerLabel: "Expense Screen",
+          drawerLabel: "Expense ",
           drawerActiveTintColor: "#fff",
           drawerInactiveTintColor: "#fff",
         }}
@@ -194,7 +194,7 @@ const DrawerNavigatorRoutes = (props) => {
       <Drawer.Screen
         name="GoalScreenStack"
         options={{
-          drawerLabel: "Goal Screen",
+          drawerLabel: "Goal ",
           drawerActiveTintColor: "#fff",
           drawerInactiveTintColor: "#fff",
         }}
@@ -204,7 +204,7 @@ const DrawerNavigatorRoutes = (props) => {
       <Drawer.Screen
         name="SettingScreenStack"
         options={{
-          drawerLabel: "Setting Screen",
+          drawerLabel: "Setting ",
           drawerActiveTintColor: "#fff",
           drawerInactiveTintColor: "#fff",
         }}

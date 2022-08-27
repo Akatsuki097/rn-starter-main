@@ -9,31 +9,31 @@ import ErrorOverlay from "./Components/ErrorOverlay";
 
 function RecentExpenses() {
   const expensesCtx = useContext(ExpenseContext);
-  const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(true);
-  useEffect(() => {
-    async function getExpenses() {
-      setIsFetching(true);
-      try {
-        const expenses = await fetchExpenses();
-        expensesCtx.setExpenses(expenses);
-      } catch (error) {
-        setError("Error fetching expenses");
-      }
+  // const [error, setError] = useState(null);
+  // const [isFetching, setIsFetching] = useState(true);
+  // useEffect(() => {
+  //   async function getExpenses() {
+  //     setIsFetching(true);
+  //     try {
+  //       const expenses = await fetchExpenses();
+  //       expensesCtx.setExpenses(expenses);
+  //     } catch (error) {
+  //       setError("Error fetching expenses");
+  //     }
 
-      setIsFetching(false);
-      //console.log(expenses);
-    }
-    getExpenses();
-  }, []);
+  //     setIsFetching(false);
+  //     //console.log(expenses);
+  //   }
+  //   getExpenses();
+  // }, []);
 
-  if (error && !isFetching) {
-    return <ErrorOverlay message={error} />;
-  }
+  // if (error && !isFetching) {
+  //   return <ErrorOverlay message={error} />;
+  // }
 
-  if (isFetching) {
-    return <Loader loading={isFetching} />;
-  }
+  // if (isFetching) {
+  //   return <Loader loading={isFetching} />;
+  // }
 
   const RecentExpenses = expensesCtx.expenses.filter((expense) => {
     const today = new Date();

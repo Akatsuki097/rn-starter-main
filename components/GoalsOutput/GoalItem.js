@@ -31,9 +31,14 @@ function GoalItem({ id, description, amount, date, isCompleted }) {
   const incomesSum = incomesCtx.incomes.reduce((sum, income) => {
     return sum + income.amount;
   }, 0);
-  // console.log(amount / incomesSum);
-  // console.log(incomesSum);
-  const progress = incomesSum / amount;
+  const expensesSum = expenseCtx.expenses.reduce((sum, expense) => {
+    return sum + expense.amount;
+  }, 0);
+  let progress = (incomesSum - expensesSum) / amount;
+
+  if (progress < 0) {
+    progress = 0;
+  }
 
   async function goalCompleteHandler() {
     // expenseCtx.addExpense(description, amount, getFormatedDate(today));
