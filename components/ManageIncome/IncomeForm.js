@@ -29,7 +29,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   };
 
   const handleConfirm = (date) => {
-    tempdate.setDate(date.getDate() + 1);
+    tempdate.setDate(date.getDate());
     date.setDate(date.getDate() + 1);
 
     // console.log("A date has been picked: ", getFormatedDate(date));
@@ -76,7 +76,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
       setInputs((currInputs) => {
-        console.log(currInputs.date.value);
+        // console.log(currInputs.date.value);
         return {
           amount: { value: currInputs.amount.value, isValid: amountIsValid },
           date: { value: currInputs.date.value, isValid: dateIsValid },

@@ -3,7 +3,7 @@ import IncomesContextProvider from "../../store/incomes-context";
 import GoalItem from "./GoalItem";
 
 function renderGoal(itemData, progress) {
-  return <GoalItem {...itemData.item} progress={0.5} />;
+  return <GoalItem {...itemData.item} />;
 }
 
 function GoalsList({ goals }) {

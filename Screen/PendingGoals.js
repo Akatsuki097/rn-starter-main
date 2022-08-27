@@ -17,6 +17,7 @@ function PendingGoals() {
       try {
         const goals = await fetchGoals();
         goalsCtx.setGoals(goals);
+        // console.log(goals);
       } catch (error) {
         setError("Error fetching goals");
       }
@@ -35,19 +36,9 @@ function PendingGoals() {
     return <Loader loading={isFetching} />;
   }
 
-  const PendingGoals = goalsCtx.goals.filter((goal) => {
-    const today = new Date();
-    //console.log(today);
-    //console.log(goal.date);
-    const date7daysAgo = getDateMinusDays(today, 7);
-    //console.log(" " + date7daysAgo);
-
-    return goal.date >= date7daysAgo;
-  });
-
   return (
     <GoalsOutput
-      goals={PendingGoals}
+      goals={goalsCtx.pendingGoals}
       goalsPeriod="Last 7 days"
       fallbackText="No goals registered for the last 7 days"
     />

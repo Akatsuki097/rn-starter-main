@@ -9,7 +9,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { getFormatedDate } from "react-native-modern-datepicker";
 import IconButton from "../UI/IconButton";
 
-function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
+function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
@@ -45,6 +45,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       value: defaultValues ? defaultValues.amount.toString() : "",
       isValid: true,
     },
+    isCompleted: false,
     //date: defaultValues ? getFormattedDate(defaultValues.date) : "",
     date: {
       value: defaultValues ? defaultValues.date.toISOString().slice(0, 10) : "",
@@ -66,21 +67,23 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   }
 
   function submitHandler() {
-    const expenseData = {
+    const goalData = {
       amount: +inputs.amount.value,
+      isCompleteed: inputs.isCompleted,
       date: new Date(inputs.date.value),
       description: inputs.description.value,
     };
-    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
-    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
-    const descriptionIsValid = expenseData.description.trim().length > 0;
+    const amountIsValid = !isNaN(goalData.amount) && goalData.amount > 0;
+    const dateIsValid = goalData.date.toString() !== "Invalid Date";
+    const descriptionIsValid = goalData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
       setInputs((currInputs) => {
-        console.log(currInputs.date.value);
+        // console.log(currInputs.date.value);
         return {
           amount: { value: currInputs.amount.value, isValid: amountIsValid },
+          isCompleted: false,
           date: { value: currInputs.date.value, isValid: dateIsValid },
           description: {
             value: currInputs.description.value,
@@ -91,7 +94,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       return;
     }
 
-    onSubmit(expenseData);
+    onSubmit(goalData);
   }
 
   const formIsInvalid =
@@ -168,7 +171,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   );
 }
 
-export default ExpenseForm;
+export default GoalForm;
 
 const styles = StyleSheet.create({
   formstyle: {

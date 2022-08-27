@@ -14,7 +14,7 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
-  const [tempdate, setTempdate] = useState(new Date());
+  const [tempdate, setTempdate] = useState(null);
 
   const [confirmDate, setConfirmDate] = useState(false);
 
@@ -30,7 +30,8 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   };
 
   const handleConfirm = (date) => {
-    tempdate.setDate(date.getDate() + 1);
+    setTempdate(date);
+    // console.log("A date has been picked: ", getFormatedDate(tempdate));
     date.setDate(date.getDate() + 1);
 
     // console.log("A date has been picked: ", getFormatedDate(date));
@@ -44,6 +45,7 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       value: defaultValues ? defaultValues.amount.toString() : "",
       isValid: true,
     },
+    isCompleted: false,
     //date: defaultValues ? getFormattedDate(defaultValues.date) : "",
     date: {
       value: defaultValues ? defaultValues.date.toISOString().slice(0, 10) : "",
@@ -67,6 +69,7 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   function submitHandler() {
     const goalData = {
       amount: +inputs.amount.value,
+      isCompleted: false,
       date: new Date(inputs.date.value),
       description: inputs.description.value,
     };
@@ -77,7 +80,7 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
       setInputs((currInputs) => {
-        console.log(currInputs.date.value);
+        // console.log(currInputs.date.value);
         return {
           amount: { value: currInputs.amount.value, isValid: amountIsValid },
           date: { value: currInputs.date.value, isValid: dateIsValid },

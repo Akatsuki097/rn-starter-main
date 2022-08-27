@@ -17,6 +17,7 @@ export async function fetchGoals() {
   for (const key in response.data) {
     const goalObj = {
       id: key,
+      isCompleted: response.data[key].isCompleted,
       amount: response.data[key].amount,
       date: new Date(response.data[key].date),
       description: response.data[key].description,

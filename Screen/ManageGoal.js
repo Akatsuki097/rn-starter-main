@@ -53,6 +53,7 @@ function ManageGoal({ route, navigation }) {
         //console.log("submit done1");
       } else {
         const id = await storeGoal(goalData);
+        // console.log(goalData);
         goalsCtx.addGoal({ ...goalData, id: id });
       }
       navigation.goBack();
@@ -60,7 +61,7 @@ function ManageGoal({ route, navigation }) {
       setError("Error submitting goal - try again");
       setIsSubmitting(false);
     }
-    goalsCtx.progress = 0.5;
+    // goalsCtx.progress = 0.5;
   }
 
   if (isSubmitting) {

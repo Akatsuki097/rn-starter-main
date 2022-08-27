@@ -6,11 +6,14 @@ import { GlobalStyles } from "../../constants/styles";
 import { getFomattedDate } from "../../util/date";
 import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "react-native-progress/Bar";
-import IncomesContextProvider, {
-  IncomeContext,
-} from "../../store/incomes-context";
+import Button from "../UI/Button";
+import { IncomeContext } from "../../store/incomes-context";
+import { GoalContext } from "../../store/goals-context";
+import { ExpenseContext } from "../../store/expenses-context";
+import { getFormatedDate } from "react-native-modern-datepicker";
+import { storeExpense } from "../../util/http";
 
-function GoalItem({ id, description, amount, date, progress }) {
+function GoalItem({ id, description, amount, date, isCompleted }) {
   const navigation = useNavigation();
   function goalpressHandler() {
     navigation.navigate("ManageGoal", {
@@ -19,30 +22,82 @@ function GoalItem({ id, description, amount, date, progress }) {
   }
 
   const incomesCtx = useContext(IncomeContext);
+  const goalsCtx = useContext(GoalContext);
+  const expenseCtx = useContext(ExpenseContext);
+  const today = new Date();
+  const [completeStatus, setCompleteStatus] = useState(false);
 
   // console.log(incomesCtx.incomes.entries.length);
   const incomesSum = incomesCtx.incomes.reduce((sum, income) => {
     return sum + income.amount;
   }, 0);
-  console.log(amount / incomesSum);
-  console.log(incomesSum);
+  // console.log(amount / incomesSum);
+  // console.log(incomesSum);
+  const progress = incomesSum / amount;
+
+  async function goalCompleteHandler() {
+    // expenseCtx.addExpense(description, amount, getFormatedDate(today));
+    const expenseData = {
+      amount: amount,
+      date: today,
+      description: description,
+    };
+    // expenseCtx.addExpense(expenseData);
+    // console.log(expenseData);
+    const id2 = storeExpense(expenseData);
+
+    expenseCtx.addExpense({ ...expenseData, id: id2 });
+    // console.log(id + "gaol itameee");
+    goalsCtx.completeGoal(id);
+  }
+
+  function goalshowHandler() {}
 
   return (
     <Pressable
-      onPress={goalpressHandler}
+      onPress={isCompleted ? goalshowHandler : goalpressHandler}
       style={({ pressed }) => pressed && styles.pressed}
     >
       <View style={styles.goalItem}>
         <View>
-          <Text style={[styles.textBase, styles.description]}>
-            {description}
-          </Text>
-          <Text style={styles.textBase}>
-            {Math.floor((date - new Date()) / (1000 * 60 * 60 * 24))} days left
-          </Text>
-          <ProgressBar progress={amount / incomesSum} width={200}>
-            {<Text>Progress {(amount / incomesSum).toFixed(5) * 100}% </Text>}
-          </ProgressBar>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={[styles.textBase, styles.description]}>
+              {description}
+            </Text>
+            {progress >= 1 && !isCompleted && (
+              <Button
+                style={styles.button}
+                mode="flat"
+                onPress={goalCompleteHandler}
+              >
+                Complete Your Goal
+              </Button>
+            )}
+          </View>
+
+          {!isCompleted && (
+            <Text style={styles.textBase}>
+              {Math.floor((date - new Date()) / (1000 * 60 * 60 * 24))} days
+              left
+            </Text>
+          )}
+
+          {!isCompleted && (
+            <ProgressBar progress={progress} width={200}>
+              {progress < 1 && (
+                <Text>Progress {(progress * 100).toFixed(3)}% </Text>
+              )}
+              {progress >= 1 && <Text>Progress 100% </Text>}
+            </ProgressBar>
+          )}
+
+          {isCompleted && (
+            <Text style={styles.textBase}>
+              Completed on {getFomattedDate(today)}
+            </Text>
+          )}
         </View>
         <View style={styles.amountcontainer}>
           <Text style={styles.amount}>{amount.toFixed(2)}</Text>
@@ -94,5 +149,10 @@ const styles = StyleSheet.create({
   amount: {
     color: GlobalStyles.colors.primary500,
     fontWeight: "bold",
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
+    backgroundColor: "white",
   },
 });

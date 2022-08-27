@@ -66,7 +66,7 @@ function ManageExpense({ route, navigation }) {
 
   if (isSubmitting) {
     return <Loader loading={isSubmitting} />;
-    console.log("submit done");
+    // console.log("submit done");
   }
 
   if (error && !isSubmitting) {
