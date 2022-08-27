@@ -12,8 +12,6 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-import { AsyncStorage } from "react-native";
-
 import Loader from "./Components/Loader";
 
 const LoginScreen = ({ navigation }) => {

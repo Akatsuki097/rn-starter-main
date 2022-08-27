@@ -10,7 +10,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Import Screens
-import SplashScreen from "./Screen/SplashScreen";
+
 import LoginScreen from "./Screen/LoginScreen";
 import RegisterScreen from "./Screen/RegisterScreen";
 import DrawerNavigationRoutes from "./Screen/DrawerNavigationRoutes";
@@ -53,14 +53,7 @@ const App = () => {
       <ExpensesContextProvider>
         <GoalsContextProvider>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="SplashScreen">
-              {/* SplashScreen which will come once for 5 Seconds */}
-              <Stack.Screen
-                name="SplashScreen"
-                component={SplashScreen}
-                // Hiding header for Splash Screen
-                options={{ headerShown: false }}
-              />
+            <Stack.Navigator initialRouteName="Auth">
               {/* Auth Navigator: Include Login and Signup */}
               <Stack.Screen
                 name="Auth"
