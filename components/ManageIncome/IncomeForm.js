@@ -29,7 +29,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   };
 
   const handleConfirm = (date) => {
-    tempdate.setDate(date.getDate());
+    tempdate.setDate(date.getDate() + 1);
     date.setDate(date.getDate() + 1);
 
     // console.log("A date has been picked: ", getFormatedDate(date));
