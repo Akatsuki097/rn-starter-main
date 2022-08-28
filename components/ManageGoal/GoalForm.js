@@ -29,13 +29,14 @@ function GoalForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
-    setTempdate(date);
-    // console.log("A date has been picked: ", getFormatedDate(tempdate));
-    date.setDate(date.getDate() + 1);
+  const handleConfirm = (date1) => {
+    date1.setDate(date1.getDate() - 1);
 
-    // console.log("A date has been picked: ", getFormatedDate(date));
-    inputChangeHandler("date", getFormatedDate(date));
+    setTempdate(date1);
+    setDate(date1);
+
+    date1.setDate(date1.getDate() + 1);
+    inputChangeHandler("date", getFormatedDate(date1));
     setDatePickerVisibility(false);
     setConfirmDate(true);
   };

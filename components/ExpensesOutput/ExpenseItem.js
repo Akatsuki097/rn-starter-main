@@ -13,6 +13,8 @@ function ExpenseItem({ id, description, amount, date }) {
     });
   }
 
+  // date.setDate(date.getDate() + 1);
+
   return (
     <Pressable
       onPress={expensepressHandler}

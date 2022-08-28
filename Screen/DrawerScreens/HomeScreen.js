@@ -49,24 +49,6 @@ const HomeScreen = () => {
     getExpenses();
   }, []);
 
-  // setIsFetching(true);
-  // setError(null);
-  // useEffect(() => {
-  //   async function getIncomes() {
-  //     setIsFetching(true);
-  //     try {
-  //       const incomes = await fetchIncomes();
-  //       incomeCtx.setIncomes(incomes);
-  //     } catch (error) {
-  //       setError("Error fetching incomes");
-  //     }
-
-  //     setIsFetching(false);
-  //     //console.log(incomes);
-  //   }
-  //   getIncomes();
-  // }, []);
-
   useEffect(() => {
     const allMonthlyExpenses = expenseCtx.expenses.filter((expense) => {
       const expenseDate = new Date(expense.date);

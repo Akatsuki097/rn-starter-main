@@ -58,6 +58,8 @@ function GoalItem({ id, description, amount, date, isCompleted }) {
 
   function goalshowHandler() {}
 
+  // date.setDate(date.getDate() + 1);
+
   return (
     <Pressable
       onPress={isCompleted ? goalshowHandler : goalpressHandler}

@@ -10,7 +10,7 @@ import { getFormatedDate } from "react-native-modern-datepicker";
 import IconButton from "../UI/IconButton";
 
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
@@ -28,12 +28,14 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
-    tempdate.setDate(date.getDate() + 1);
-    date.setDate(date.getDate() + 1);
+  const handleConfirm = (date1) => {
+    date1.setDate(date1.getDate() - 1);
 
-    // console.log("A date has been picked: ", getFormatedDate(date));
-    inputChangeHandler("date", getFormatedDate(date));
+    setTempdate(date1);
+    setDate(date1);
+
+    date1.setDate(date1.getDate() + 1);
+    inputChangeHandler("date", getFormatedDate(date1));
     setDatePickerVisibility(false);
     setConfirmDate(true);
   };
@@ -76,7 +78,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //Alert.alert("Invalid data", "Please check your data");
       setInputs((currInputs) => {
-        // console.log(currInputs.date.value);
+        // console.log(currInputs.date.value, "dateeee ");
         return {
           amount: { value: currInputs.amount.value, isValid: amountIsValid },
           date: { value: currInputs.date.value, isValid: dateIsValid },
@@ -88,7 +90,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       });
       return;
     }
-
+    console.log(inputs.date.value, "dateeee ");
     onSubmit(expenseData);
   }
 
@@ -130,7 +132,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       </View>
       {confirmDate && (
         <Text style={[styles.tempdate, styles.date]}>
-          {tempdate.toISOString().slice(0, 10)}
+          {date.toISOString().slice(0, 10)}
         </Text>
       )}
       <Input

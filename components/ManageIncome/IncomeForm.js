@@ -10,7 +10,7 @@ import { getFormatedDate } from "react-native-modern-datepicker";
 import IconButton from "../UI/IconButton";
 
 function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
@@ -28,12 +28,13 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
-    tempdate.setDate(date.getDate() + 1);
-    date.setDate(date.getDate() + 1);
+  const handleConfirm = (date1) => {
+    date1.setDate(date1.getDate() - 1);
 
-    // console.log("A date has been picked: ", getFormatedDate(date));
-    inputChangeHandler("date", getFormatedDate(date));
+    setDate(date1);
+
+    date1.setDate(date1.getDate() + 1);
+    inputChangeHandler("date", getFormatedDate(date1));
     setDatePickerVisibility(false);
     setConfirmDate(true);
   };
@@ -130,7 +131,7 @@ function IncomeForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       </View>
       {confirmDate && (
         <Text style={[styles.tempdate, styles.date]}>
-          {tempdate.toISOString().slice(0, 10)}
+          {date.toISOString().slice(0, 10)}
         </Text>
       )}
       <Input

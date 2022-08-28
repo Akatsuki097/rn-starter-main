@@ -13,6 +13,8 @@ function IncomeItem({ id, description, amount, date }) {
     });
   }
 
+  // date.setDate(date.getDate() + 1);
+
   return (
     <Pressable
       onPress={incomepressHandler}
